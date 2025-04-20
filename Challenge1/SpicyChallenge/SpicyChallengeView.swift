@@ -81,7 +81,6 @@ struct CapsuleProgressView: View {
                 x: 0,
                 y: 5
             )
-                
         }
     }
 }

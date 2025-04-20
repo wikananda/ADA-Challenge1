@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChallengeDetailsView: View {
     @State var userResponse : String? = nil
-    
+
     var img: String = "food_0"
     var title: String = "Food Name"
     var date: String = "Jun 10, 2024"
@@ -38,7 +38,7 @@ struct ChallengeDetailsView: View {
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(.gray)
                     }
-                    
+
                     Spacer(minLength: 10)
                     
                     HStack {

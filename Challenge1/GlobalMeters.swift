@@ -17,5 +17,3 @@ let tastyWeight: [Font.Weight] = [.black, .regular, .medium, .bold, .heavy]
 let spicyColors: [Color] = [.spicy0, .spicy0, .spicy2, .spicy3, .spicy4, .spicy5, .spicy6, .spicy7, .spicy8, .spicy9, .spicy10]
 let spicyWeights: [Font.Weight] = [.regular, .regular, .regular, .medium, .medium, .bold, .bold, .heavy, .black, .black, .black]
 let spicySizes: [CGFloat] = [32, 32, 32, 32, 32, 32, 38, 48, 64, 82, 82]
-
-
