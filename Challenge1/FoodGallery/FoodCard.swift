@@ -65,7 +65,7 @@ struct FoodCard: View {
                 .padding(.horizontal, 10)
                 .padding(.vertical)
             }
-            .frame(maxHeight: (height / 2 + 20), alignment: .bottom)
+            .frame(maxHeight: (height / 2 + 20))
             .cornerRadius(20)
         }
         .frame(maxWidth: 175)

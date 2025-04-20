@@ -16,7 +16,7 @@ public struct SpicinessCard: View {
         ZStack(alignment: .bottom) {
             Text(String(spiciness))
                 .frame(maxHeight: .infinity, alignment: .top)
-                .font(.system(size: 128, weight: .bold))
+                .font(.system(size: 100, weight: .bold))
                 .foregroundColor(.white)
             ZStack {
                 LinearGradient(
@@ -28,7 +28,7 @@ public struct SpicinessCard: View {
             }
             .frame(maxHeight: 150, alignment: .bottomLeading)
         }
-        .frame(width: 170, height: 200)
+        .frame(width: 150, height: 170)
         .background(colors[spiciness])
         .cornerRadius(20)
     }

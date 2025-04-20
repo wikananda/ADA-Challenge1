@@ -19,14 +19,14 @@ public struct TastinessCard: View {
                 Image(systemName: "face.smiling.inverse")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 120, height: 120)
+                    .frame(width: 100, height: 100)
                     .foregroundColor(.white)
                 Text(tastinessLevels[tastiness])
-                    .font(.system(size: 48, weight: fontWeight[tastiness]))
+                    .font(.system(size: 40, weight: fontWeight[tastiness]))
                     .foregroundColor(.white)
             }
         }
-        .frame(width: 170, height: 200)
+        .frame(width: 150, height: 170)
         .background(colors[tastiness])
         .cornerRadius(20)
     }
