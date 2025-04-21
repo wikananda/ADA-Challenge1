@@ -9,20 +9,49 @@ import SwiftUI
 
 struct FoodFormView: View {
     @State var img: String = "food_0"
+    @State var capturedImage: UIImage?
+    @State var isShowingImagePicker = false
+    @State var sourceType: UIImagePickerController.SourceType = .camera
     
     @State var foodName: String = ""
+    @State var location: String = ""
     @State var date: Date = Date()
+
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ScrollView {
             VStack (spacing: 20) {
-                Image(img)
-                    .resizable()
-                    .cornerRadius(20)
-                    .shadow(color: .black.opacity(0.12), radius: 15, x: 0, y: 12)
-                    .scaledToFit()
+                if let capturedImage = capturedImage {
+                    Image(uiImage: capturedImage)
+                        .resizable()
+                        .cornerRadius(20)
+                        .shadow(color: .black.opacity(0.12), radius: 15, x: 0, y: 12)
+                        .scaledToFit()
+                } else {
+                    Image(img)
+                        .resizable()
+                        .cornerRadius(20)
+                        .shadow(color: .black.opacity(0.12), radius: 15, x: 0, y: 12)
+                        .scaledToFit()
+                }
+
+                // Camera button
+                Button(action: {
+                    sourceType = .camera
+                    isShowingImagePicker = true
+                }) {
+                    Label("Retake Photo", systemImage: "camera")
+                        .padding()
+                        .padding(.horizontal)
+                        .background(Color.orangeish.opacity(0.8))
+                        .foregroundColor(.white)
+                        .clipShape(Capsule())
+                }
                 //                    .frame(height: .infinity)
                 //                    .padding(.horizontal)
+
+                // Food name writer
                 VStack (alignment: .leading) {
                     VStack (alignment: .leading) {
                         HStack(alignment: .center, spacing: 20) {
@@ -39,6 +68,8 @@ struct FoodFormView: View {
                             .frame(height: 1)
                             .foregroundColor(.gray.opacity(0.2))
                     }
+
+                    // Date picker
                     VStack (alignment: .leading) {
                         HStack(alignment: .center, spacing: 20) {
                             Text("Date")
@@ -59,6 +90,8 @@ struct FoodFormView: View {
                             .frame(height: 1)
                             .foregroundColor(.gray.opacity(0.2))
                     }
+
+                    // Location picker
                     VStack (alignment: .leading) {
                         HStack(alignment: .center, spacing: 20) {
                             Text("Location")
@@ -66,7 +99,7 @@ struct FoodFormView: View {
                                 .font(.system(size: 16, weight: .regular))
                                 .foregroundColor(.black)
                             
-                            TextField("e.g. Warung Indo", text: $foodName)
+                            TextField("e.g. Warung Indo", text: $location)
                                 .textFieldStyle(.plain)
                         }
                         .padding(.vertical, 5)
@@ -101,12 +134,27 @@ struct FoodFormView: View {
         }
         .navigationTitle(Text("Add Food"))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+        }
+        .sheet(isPresented: $isShowingImagePicker) {
+            ImagePicker(sourceType: sourceType,
+                selectedImage: Binding(
+                    get: { capturedImage ?? UIImage() },
+                    set: { capturedImage = $0 }
+                ))
+        }
+    }
+    
+    func SubmitForm() {
+        dismiss()
     }
 }
 
-func SubmitForm() {
-    
-}
 
 struct ScaleButtonStyle: ButtonStyle {
 

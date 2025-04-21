@@ -106,7 +106,7 @@ struct ChallengeDetailsView: View {
                 }
                 
                 if (userResponse == "yes") {
-                    Button(action: SubmitForm) {
+                    Button(action: SubmitFormAgain) {
                         Label("Submit", systemImage: "text.document")
                     }
                     .buttonStyle(
@@ -119,6 +119,10 @@ struct ChallengeDetailsView: View {
         }
         .ignoresSafeArea(edges: .top)
     }
+}
+
+func SubmitFormAgain() {
+    
 }
 
 #Preview {

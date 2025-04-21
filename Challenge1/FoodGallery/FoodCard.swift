@@ -13,11 +13,19 @@ struct FoodCard: View {
     var location: String = "Location"
     var spiciness: Int = 0
     
-    // For vertical case
-    var vertical: Bool = true
-    var height: CGFloat {
-        vertical ? 290 : 175
+//    private let height: CGFloat = CGFloat.random(in: 175...290)
+    
+    private var height: CGFloat {
+        let seed = name.hashValue
+        let random = CGFloat(abs(seed % 115))
+        return 175 + random
     }
+    
+    // For vertical case
+//    var vertical: Bool = true
+//    var height: CGFloat {
+//        vertical ? 290 : 175
+//    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
