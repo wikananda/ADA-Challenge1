@@ -8,20 +8,44 @@
 import SwiftUI
 import SwiftData
 
-struct FoodFormView: View {
-    @State var img: String = "food_0"
+struct FoodEditView: View {
     @Binding var capturedImage: UIImage?
     @State var isShowingImagePicker = false
     @State var sourceType: UIImagePickerController.SourceType = .camera
     
-    @State var foodName: String = ""
-    @State var location: String = ""
-    @State var date: Date = Date()
-    @State var tastiness: Int = 2
-    @State var spiciness: Int = 0
+    // @State var foodName: String = ""
+    // @State var location: String = ""
+    // @State var date: Date = Date()
+    
+    @Bindable var food: FoodData
+
+    @State private var newName: String
+    @State private var newLocation: String
+    @State private var newDate: Date
+    @State private var newTastiness: Int
+    @State private var newSpiciness: Int
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    
+    private var img: UIImage {
+        if let uiImage = loadImageFromDocuments(fileName: food.img) {
+            return uiImage
+        }
+        return UIImage(resource: .food0)
+    }
+    
+    init (capturedImage: Binding<UIImage?>, food: FoodData)
+    {
+        self._capturedImage = capturedImage
+        self._food = Bindable(wrappedValue: food)
+        _newName = State(initialValue: food.name)
+        _newLocation = State(initialValue: food.location)
+        _newDate = State(initialValue: food.date)
+        _newTastiness = State(initialValue: food.tastiness)
+        _newSpiciness = State(initialValue: food.spiciness)
+    }
+    
     
     var body: some View {
         ScrollView {
@@ -33,7 +57,7 @@ struct FoodFormView: View {
                         .shadow(color: .black.opacity(0.12), radius: 15, x: 0, y: 12)
                         .scaledToFit()
                 } else {
-                    Image(img)
+                    Image(uiImage: img)
                         .resizable()
                         .cornerRadius(20)
                         .shadow(color: .black.opacity(0.12), radius: 15, x: 0, y: 12)
@@ -64,7 +88,7 @@ struct FoodFormView: View {
                                 .font(.system(size: 16, weight: .regular))
                                 .foregroundColor(.black)
                             
-                            TextField("e.g. Fried Rice", text: $foodName)
+                            TextField(newName, text: $newName)
                                 .textFieldStyle(.plain)
                         }
                         .padding(.vertical, 5)
@@ -83,7 +107,7 @@ struct FoodFormView: View {
                             
                             DatePicker(
                                 "",
-                                selection: $date,
+                                selection: $newDate,
                                 displayedComponents: [.date, .hourAndMinute]
                             )
                             .labelsHidden()
@@ -103,7 +127,7 @@ struct FoodFormView: View {
                                 .font(.system(size: 16, weight: .regular))
                                 .foregroundColor(.black)
                             
-                            TextField("e.g. Warung Indo", text: $location)
+                            TextField(newLocation, text: $newLocation)
                                 .textFieldStyle(.plain)
                         }
                         .padding(.vertical, 5)
@@ -116,7 +140,7 @@ struct FoodFormView: View {
                     Text("Tastiness")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.black)
-                    TastinessMeter(tastiness: $tastiness)
+                    TastinessMeter(tastiness: $newTastiness)
                 }
                 .frame(maxWidth: .infinity)
                 
@@ -124,19 +148,27 @@ struct FoodFormView: View {
                     Text("Spiciness")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.black)
-                    SpicinessMeter(spiciness: $spiciness)
+                    SpicinessMeter(spiciness: $newSpiciness)
                 }
-                
-                Button(action: SubmitForm) {
+            
+                Button(action: UpdateFood) {
                     Label("Save", systemImage: "checkmark.circle")
                 }
                 .buttonStyle(
                     ScaleButtonStyle(scaleAmount: 1.1, defaultColor: .orangeish, highlightColor: .white)
                 )
-            }
+                Button(action: { dismiss() }) {
+                    Label("Cancel", systemImage: "xmark")
+                }
+                .padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .background(Color.red.opacity(0.2))
+                .foregroundColor(.red)
+                .clipShape(Capsule())
+                .shadow(color: .orangeish.opacity(0.25), radius: 12, x: 0, y: 10)            }
             .padding(.horizontal)
         }
-        .navigationTitle(Text("Add Food"))
+        .navigationTitle(Text("Edit Food"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -153,36 +185,30 @@ struct FoodFormView: View {
                 ))
         }
     }
-    
-    func SubmitForm() {
-        let newFood = FoodData(
-            img: "",
-            name: foodName,
-            date: date,
-            location: location,
-            tastiness: tastiness,
-            spiciness: spiciness
-        )
-        
+
+    func UpdateFood() {
         if let imgToSave = capturedImage {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd-MM-yyyy HH.mm.ss"
-            let dateString = dateFormatter.string(from: date)
-            let fileName = "\(foodName)_\(location)_\(dateString).png"
+            let dateString = dateFormatter.string(from: newDate)
+            let fileName = "\(newName)_\(newLocation)_\(dateString).png"
             
-//            UIImageWriteToSavedPhotosAlbum(imgToSave, nil, nil, nil)
-            
+//            UIImageWriteToSavedPhotosAlbum(capturedImage, nil, nil, nil)
             if let savedFilePath = saveImageToDocuments(imgToSave, filename: fileName) {
                 print("Image saved to \(savedFilePath)")
-                newFood.img = fileName
+                food.img = fileName
             }
         }
-
-        context.insert(newFood)
+        
+        food.name = newName
+        food.date = newDate
+        food.location = newLocation
+        food.tastiness = newTastiness
+        food.spiciness = newSpiciness
         dismiss()
     }
 }
 
 #Preview {
-    FoodFormView(capturedImage: .constant(UIImage(named: "food_0")))
+    FoodEditView(capturedImage: .constant(nil), food: dummyFood)
 }

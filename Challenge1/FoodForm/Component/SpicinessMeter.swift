@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SpicinessMeter: View {
-    @State private var spiciness: Int = 10
+    @Binding var spiciness: Int
     @State var isEditing = false
     
 //    let images: [ImageResource] = [.emojiDead, .emojiSad, .emojiNeutral, .emojiSmile, .emojiLaugh]
@@ -80,5 +80,5 @@ struct SpicinessMeter: View {
 }
 
 #Preview {
-    SpicinessMeter()
+    SpicinessMeter(spiciness: .constant(0))
 }

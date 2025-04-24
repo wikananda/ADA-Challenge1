@@ -12,6 +12,7 @@ struct Challenge1App: App {
     var body: some Scene {
         WindowGroup {
             SpicerView()
+                .modelContainer(for: FoodData.self)
         }
     }
 }

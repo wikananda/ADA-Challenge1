@@ -16,6 +16,9 @@ struct ChallengeDetailsView: View {
     var time: String = "12:00 PM"
     var location: String = "Warung Indo"
     
+    @State var tastiness: Int = 2
+    @State var spiciness: Int = 0
+    
     var body: some View {
         ScrollView {
             Image(img)
@@ -89,7 +92,7 @@ struct ChallengeDetailsView: View {
                                 Text("Rate tastiness again")
                                     .font(.system(size: 16, weight: .bold))
                                     .foregroundColor(.black)
-                                TastinessMeter()
+                                TastinessMeter(tastiness: $tastiness)
                             }
                             .frame(maxWidth: .infinity)
                             
@@ -99,7 +102,7 @@ struct ChallengeDetailsView: View {
                                 Text("Rate Spiciness again")
                                     .font(.system(size: 16, weight: .bold))
                                     .foregroundColor(.black)
-                                SpicinessMeter()
+                                SpicinessMeter(spiciness: $spiciness)
                             }
                         }
                     }

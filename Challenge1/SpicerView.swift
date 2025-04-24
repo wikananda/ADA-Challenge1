@@ -12,10 +12,15 @@ struct SpicerView: View {
     @State private var showImagePicker = false
     @State private var activeTab: Int = 0
     @State private var showFoodForm = false
+    
+    func OpenCamera() {
+        showImagePicker = true
+        activeTab = 0
+    }
 
     var body: some View {
         TabView(selection: $activeTab) {
-            FoodGalleryView()
+            FoodGalleryView(onAddFoodFunc: OpenCamera)
                 .tabItem {
                     Label("Food Gallery", systemImage: "carrot")
                 }

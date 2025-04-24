@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct TastinessMeter: View {
-    @State private var tastiness: Int = 0
+    @Binding var tastiness: Int
     @State var isEditing = false
     
     let images: [ImageResource] = [.emojiDead, .emojiSad, .emojiNeutral, .emojiSmile, .emojiLaugh]
@@ -86,5 +86,5 @@ struct TastinessMeter: View {
 }
 
 #Preview {
-    TastinessMeter()
+    TastinessMeter(tastiness: .constant(2))
 }

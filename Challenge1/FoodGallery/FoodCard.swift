@@ -6,21 +6,30 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FoodCard: View {
-    var img: String = "food_0"
-    var name: String = "Food Name"
-    var location: String = "Location"
-    var spiciness: Int = 0
+//    var img: String = "food_0"
+//    var name: String = "Food Name"
+//    var location: String = "Location"
+//    var spiciness: Int = 0
+    
+    @Bindable var food: FoodData
     
 //    private let height: CGFloat = CGFloat.random(in: 175...290)
     
     private var height: CGFloat {
-        let seed = name.hashValue
+        let seed = food.name.hashValue
         let random = CGFloat(abs(seed % 115))
         return 175 + random
     }
     
+    private var img: UIImage {
+        if let uiImage = loadImageFromDocuments(fileName: food.img) {
+            return uiImage
+        }
+        return UIImage(resource: .food0)
+    }
     // For vertical case
 //    var vertical: Bool = true
 //    var height: CGFloat {
@@ -29,7 +38,7 @@ struct FoodCard: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(img)
+            Image(uiImage: img)
                 .resizable()
 //                    .scaledToFill()
                 .aspectRatio(contentMode: .fill)
@@ -47,7 +56,7 @@ struct FoodCard: View {
                 
                 // Label Contents
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(name)
+                    Text(food.name)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(Color.white)
                     
@@ -55,7 +64,7 @@ struct FoodCard: View {
                         Image(systemName: "location.circle.fill")
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(Color.white)
-                        Text(location)
+                        Text(food.location)
                             .font(.system(size: 12, weight: .regular))
                             .foregroundColor(Color.white)
                     }
@@ -64,7 +73,7 @@ struct FoodCard: View {
                         Image(systemName: "flame.fill")
                             .font(.system(size: 14, weight: .regular))
                             .foregroundColor(.red)
-                        Text(String(spiciness))
+                        Text(String(food.spiciness))
                             .font(.system(size: 12, weight: .bold))
                             .foregroundColor(.red)
                     }
@@ -81,5 +90,5 @@ struct FoodCard: View {
 }
 
 #Preview {
-    FoodCard()
+    FoodCard(food: dummyFood)
 }

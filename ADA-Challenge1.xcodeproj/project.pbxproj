@@ -27,6 +27,7 @@
 		C6BB86612DA8EA7700633F04 /* ADA-Challenge1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ADA-Challenge1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6BB86712DA8EA7900633F04 /* ADA-Challenge1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ADA-Challenge1Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6BB867B2DA8EA7900633F04 /* ADA-Challenge1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ADA-Challenge1UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6CBF81A2DBA9889003D910E /* ADA-Challenge1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ADA-Challenge1-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +76,7 @@
 		C6BB86582DA8EA7700633F04 = {
 			isa = PBXGroup;
 			children = (
+				C6CBF81A2DBA9889003D910E /* ADA-Challenge1-Info.plist */,
 				C6BB86632DA8EA7700633F04 /* Challenge1 */,
 				C6BB86742DA8EA7900633F04 /* Challenge1Tests */,
 				C6BB867E2DA8EA7900633F04 /* Challenge1UITests */,
@@ -399,7 +401,9 @@
 				DEVELOPMENT_TEAM = 3P5R2AC794;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to your camera to take food photos";
+				INFOPLIST_FILE = "ADA-Challenge1-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take food photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your Photo Library to save food photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -429,7 +433,9 @@
 				DEVELOPMENT_TEAM = 3P5R2AC794;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to your camera to take food photos";
+				INFOPLIST_FILE = "ADA-Challenge1-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take food photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your Photo Library to save food photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
