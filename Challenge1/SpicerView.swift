@@ -33,6 +33,7 @@ struct SpicerView: View {
                 }
                 .tag(2)
         }
+        .background(.white)
         .accentColor(.orangeish)
         .onChange(of: activeTab) { newValue in
             if newValue == 1 {
@@ -51,7 +52,7 @@ struct SpicerView: View {
             selectedImage = nil
         }) {
             NavigationView {
-                FoodFormView(capturedImage: selectedImage)
+                FoodFormView(capturedImage: $selectedImage)
             }
             .accentColor(.orangeish)
         }
@@ -72,17 +73,6 @@ struct ImagePickerWrapper: View {
                     dismiss()
                 }
             }
-//        print("ImagePickerWrapper presented")
-//        return ImagePicker(sourceType: .camera, selectedImage: Binding<UIImage>(
-//            get: { self.selectedImage ?? UIImage() },
-//            set: {
-//                self.selectedImage = $0
-//                print("Image selected: \($0)")
-//            }
-//        ))
-//        .onDisappear {
-//            print("ImagePicker disappeared, image: \(selectedImage != nil)")
-//        }
     }
 }
 

@@ -21,22 +21,26 @@ struct WaterfallGrid<Data, Content>: View where Data: RandomAccessCollection, Da
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
+//       ScrollView {
+            // GeometryReader { geometry in
+                let totalWidth = UIScreen.main.bounds.width
+                let columnWidth = self.columnWidth(for: totalWidth)
                 HStack(alignment: .top, spacing: spacing) {
-                    ForEach(0..<columns, id: \.self) {
-                        columnIndex in
+                    ForEach(0..<columns, id: \.self) { columnIndex in
                         LazyVStack(spacing: 12) {
-                            ForEach(columnItems(columnIndex, width: geometry.size.width)) {
-                                item in content(item)
+                            ForEach(columnItems(columnIndex)) { item in
+                                content(item)
                             }
                         }
-                        .frame(width: columnWidth(for: geometry.size.width))
+                        .frame(width: columnWidth)
                     }
                 }
                 .padding(.horizontal)
-            }
-        }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+            // }
+            // // This makes sure the grid grows vertically with its content
+            // .frame(maxWidth: .infinity, alignment: .topLeading)            
+//       }
     }
     
     private func columnWidth(for totalWidth: CGFloat) -> CGFloat {
@@ -47,7 +51,7 @@ struct WaterfallGrid<Data, Content>: View where Data: RandomAccessCollection, Da
         return width
     }
     
-    private func columnItems(_ column: Int, width: CGFloat) -> [Data.Element] {
+    private func columnItems(_ column: Int) -> [Data.Element] {
         var columnItems = [Data.Element]()
 //        var columnIndices = Array(0..<columns)
         

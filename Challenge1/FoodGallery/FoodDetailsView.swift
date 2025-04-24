@@ -46,6 +46,7 @@ struct FoodDetailsView: View {
                     }
                 }
                 .padding(.horizontal, 25)
+                .padding(.bottom)
             }
         }
         .ignoresSafeArea(edges: .top)

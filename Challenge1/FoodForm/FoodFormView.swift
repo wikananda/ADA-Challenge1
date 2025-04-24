@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FoodFormView: View {
     @State var img: String = "food_0"
-    @State var capturedImage: UIImage?
+    @Binding var capturedImage: UIImage?
     @State var isShowingImagePicker = false
     @State var sourceType: UIImagePickerController.SourceType = .camera
     
@@ -197,5 +197,5 @@ private extension ScaleButtonStyle {
 }
 
 #Preview {
-    FoodFormView()
+//    FoodFormView()
 }

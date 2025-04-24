@@ -46,7 +46,7 @@ struct FoodGalleryView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+             ScrollView {
                 VStack(alignment: .leading, spacing: 15) {
                     Text("February 2025")
                         .font(.system(size: 16, weight: .bold))
@@ -68,11 +68,10 @@ struct FoodGalleryView: View {
 //                        .padding(.bottom, 8)
                         
                     }
-                    .frame(minHeight: 1000)
                     .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .topLeading)
-            }
+             }
 //            .padding()
             .navigationTitle(Text("Food Gallery"))
             .searchable(text: $searchText)
