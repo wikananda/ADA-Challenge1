@@ -7,6 +7,9 @@
 import SwiftUI
 import Foundation
 
+// MARK: PUBLIC VARIABLES
+var randomSeed: Int = 256
+
 // MARK: BUTTON EFFECTS
 struct ScaleButtonStyle: ButtonStyle {
 

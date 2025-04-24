@@ -18,11 +18,12 @@ struct FoodCard: View {
     
 //    private let height: CGFloat = CGFloat.random(in: 175...290)
     
-    private var height: CGFloat {
-        let seed = food.name.hashValue
-        let random = CGFloat(abs(seed % 115))
-        return 175 + random
-    }
+//    private var height: CGFloat {
+//        let seed = food.name.hashValue
+//        let random = CGFloat(abs(seed % 115))
+//        return 175 + random
+//    }
+    private var height: CGFloat { food.cardHeight }
     
     private var img: UIImage {
         if let uiImage = loadImageFromDocuments(fileName: food.img) {

@@ -18,6 +18,12 @@ class FoodData: Identifiable {
     var tastiness: Int
     var spiciness: Int
     
+    var cardHeightValue: Double
+    
+    var cardHeight: CGFloat {
+        CGFloat(cardHeightValue)
+    }
+    
     init(img: String, name: String, date: Date, location: String, tastiness: Int, spiciness: Int) {
         self.id = UUID().uuidString
         self.img = img
@@ -26,5 +32,11 @@ class FoodData: Identifiable {
         self.location = location
         self.tastiness = tastiness
         self.spiciness = spiciness
+        self.cardHeightValue = generateRandomHeight()
     }
+}
+
+func generateRandomHeight() -> Double {
+    let random = Double.random(in: 0...115)
+    return 175 + random
 }
