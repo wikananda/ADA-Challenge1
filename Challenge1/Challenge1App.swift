@@ -13,6 +13,7 @@ struct Challenge1App: App {
         WindowGroup {
             SpicerView()
                 .modelContainer(for: FoodData.self)
+                .environment(\.colorScheme, .light)
         }
     }
 }

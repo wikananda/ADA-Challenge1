@@ -60,6 +60,7 @@ struct SpicerView: View {
                 FoodFormView(capturedImage: $selectedImage)
             }
             .accentColor(.orangeish)
+            .environment(\.colorScheme, .light)
         }
     }
 }

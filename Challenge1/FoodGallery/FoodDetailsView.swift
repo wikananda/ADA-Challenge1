@@ -61,6 +61,7 @@ struct FoodDetailsView: View {
                             }
                         }
                         .accentColor(.orangeish)
+                        .environment(\.colorScheme, .light)
                     }
                     Text(food.date.formatted(.dateTime.day().month().year().hour().minute()))
                         .font(.system(size: 16, weight: .regular))
@@ -92,6 +93,7 @@ struct FoodDetailsView: View {
                 FoodEditView(capturedImage: .constant(nil), food: food)
             }
             .accentColor(.orangeish)
+            .environment(\.colorScheme, .light)
         }
     }
 }

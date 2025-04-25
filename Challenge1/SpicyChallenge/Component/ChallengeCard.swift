@@ -8,24 +8,31 @@
 import SwiftUI
 
 struct ChallengeCard : View {
-    var foodName: String = "Nasi Goreng"
-    var location: String = "Warung Indo"
-    var spicyLevel: Int = 3
+    var food: FoodData
+//    var foodName: String = "Nasi Goreng"
+//    var location: String = "Warung Indo"
+//    var spicyLevel: Int = 3
+    private var img: UIImage {
+        if let uiImage = loadImageFromDocuments(fileName: food.img) {
+            return uiImage
+        }
+        return UIImage(resource: .food0)
+    }
     
     var body: some View {
         HStack (spacing: 20) {
-            Image(.food0)
+            Image(uiImage: img)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 110, height: 110, alignment: .leading)
                 .clipped()
                 .cornerRadius(20)
             VStack (alignment: .leading, spacing: 10) {
-                Text(foodName)
+                Text(food.name)
                     .font(.system(size: 16, weight: .bold))
-                Label(location, systemImage: "location.circle.fill")
+                Label(food.location, systemImage: "location.circle.fill")
                 Label {
-                    Text(String(spicyLevel))
+                    Text(String(food.spiciness))
                 } icon: {
                     Image("flame.fill")
                         .resizable()
@@ -43,5 +50,5 @@ struct ChallengeCard : View {
 }
 
 #Preview {
-    ChallengeCard()
+    ChallengeCard(food: dummyFood)
 }

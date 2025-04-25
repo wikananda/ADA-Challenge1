@@ -10,6 +10,7 @@ import SwiftUI
 struct LevelUpView: View {
     var isLevelUp: Bool = false
     var currentLevel: Int = 5
+    var onOk: (() -> Void)? = nil
     
     var body: some View {
         VStack (alignment: .center, spacing: 20) {
@@ -55,7 +56,7 @@ struct LevelUpView: View {
             
             Spacer().frame(height: 250)
             
-            Button(action: Back) {
+            Button(action: { onOk?() }) {
                 Label("Ok", systemImage: "checkmark")
             }
             .padding()
@@ -75,9 +76,6 @@ struct LevelUpView: View {
     }
 }
 
-func Back() {
-    
-}
 
 #Preview {
     LevelUpView()

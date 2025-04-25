@@ -8,36 +8,52 @@
 import SwiftUI
 
 struct ChallengeDetailsView: View {
-    @State var userResponse : String? = nil
-
-    var img: String = "food_0"
-    var title: String = "Food Name"
-    var date: String = "Jun 10, 2024"
-    var time: String = "12:00 PM"
-    var location: String = "Warung Indo"
+    var food: FoodData
+    @State private var userResponse : String? = nil
+    @Binding var navigationPath: NavigationPath
+//    @State private var showLevelUp = false
+//    @State private var isLevelUp = false
+//    var img: String = "food_0"
+//    var title: String = "Food Name"
+//    var date: String = "Jun 10, 2024"
+//    var time: String = "12:00 PM"
+//    var location: String = "Warung Indo"
+    private var img: UIImage {
+        if let uiImage = loadImageFromDocuments(fileName: food.img) {
+            return uiImage
+        }
+        return UIImage(resource: .food0)
+    }
     
-    @State var tastiness: Int = 2
-    @State var spiciness: Int = 0
+    @State var tastiness: Int
+    @State var spiciness: Int
+    
+    init(food: FoodData, navigationPath: Binding<NavigationPath>) {
+        self.food = food
+        self._navigationPath = navigationPath
+        _tastiness = State(initialValue: food.tastiness)
+        _spiciness = State(initialValue: food.spiciness)
+    }
     
     var body: some View {
         ScrollView {
-            Image(img)
+            Image(uiImage: img)
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
             VStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(title)
+                    Text(food.name)
                         .font(.system(size: 34, weight: .bold))
                         .foregroundColor(.black)
-                    Text("\(date) (\(time))")
+                    Text(food.date.formatted(.dateTime.day().month().year().hour().minute()))
                         .font(.system(size: 16, weight: .regular))
                         .foregroundColor(.gray)
                     HStack {
                         Image(systemName: "location.circle.fill")
                             .font(.system(size: 18, weight: .regular))
                             .foregroundColor(.gray)
-                        Text("\(location)")
+                        Text(food.location)
                             .font(.system(size: 16, weight: .regular))
                             .foregroundColor(.gray)
                     }
@@ -45,9 +61,9 @@ struct ChallengeDetailsView: View {
                     Spacer(minLength: 10)
                     
                     HStack {
-                        TastinessCard()
+                        TastinessCard(tastiness: food.tastiness)
                         Spacer()
-                        SpicinessCard()
+                        SpicinessCard(spiciness: food.spiciness)
                     }
                     
                     Spacer(minLength: 20)
@@ -109,7 +125,16 @@ struct ChallengeDetailsView: View {
                 }
                 
                 if (userResponse == "yes") {
-                    Button(action: SubmitFormAgain) {
+                    Button(action: {
+                        let isLevelUp = spiciness < food.spiciness
+//                            showLevelUp = true
+                        navigationPath.append(
+                            LevelUpNavigation(
+                                isLevelUp: isLevelUp,
+                                currentLevel: 2
+                            )
+                        )
+                    }) {
                         Label("Submit", systemImage: "text.document")
                     }
                     .buttonStyle(
@@ -124,10 +149,7 @@ struct ChallengeDetailsView: View {
     }
 }
 
-func SubmitFormAgain() {
-    
-}
-
-#Preview {
-    ChallengeDetailsView()
-}
+//#Preview {
+//    @State var path = NavigationPath()
+//    ChallengeDetailsView(food: dummyFood, navigationPath: $path)
+//}

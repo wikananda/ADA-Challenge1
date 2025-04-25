@@ -8,7 +8,7 @@ import Foundation
 import SwiftData
 
 @Model
-class FoodData: Identifiable {
+class FoodData: Identifiable, Hashable {
     var id: String
     var img: String
     var name: String
