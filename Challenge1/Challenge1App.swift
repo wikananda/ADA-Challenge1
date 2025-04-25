@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Challenge1App: App {
+    @Environment(\.modelContext) private var context
+    
     var body: some Scene {
         WindowGroup {
             SpicerView()
-                .modelContainer(for: FoodData.self)
+                .modelContainer(for: [FoodData.self, UserData.self])
                 .environment(\.colorScheme, .light)
         }
     }

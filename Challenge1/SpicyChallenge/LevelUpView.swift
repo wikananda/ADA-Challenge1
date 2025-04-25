@@ -6,35 +6,44 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LevelUpView: View {
+    @Environment(\.modelContext) private var context
     var isLevelUp: Bool = false
-    var currentLevel: Int = 5
     var onOk: (() -> Void)? = nil
+    @Query private var users: [UserData]
     
     var body: some View {
         VStack (alignment: .center, spacing: 20) {
+            let user = users.first
+            let currentLevel = user?.level ?? 2
             if (isLevelUp) {
                 Image(.flameFill)
-                    .foregroundColor(spicyColors[currentLevel + 1])
+                    .foregroundColor(spicyColors[currentLevel])
                     .shadow(
-                        color: spicyColors[currentLevel + 1].opacity(0.5),
+                        color: spicyColors[currentLevel].opacity(0.5),
                         radius: 12,
                         x: 0,
                         y: 12
                     )
-                Text("Level \(currentLevel + 1)!")
+                Text("Level \(currentLevel)!")
                     .font(.system(size: 34, weight: .bold))
-                    .foregroundColor(spicyColors[currentLevel + 1])
+                    .foregroundColor(spicyColors[currentLevel])
                 
                 (
                     Text("Yohoo! You now ")
-                    + Text("level \(currentLevel + 1)").fontWeight(.bold)
+                    + Text("level \(currentLevel)").fontWeight(.bold)
                     + Text("! \nKeep goin!")
                 )
                 .frame(maxWidth: 250)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
+                .onAppear {
+                    user?.levelUp()
+                    user?.resetSpicyCount()
+                    try? context.save()
+                }
             } else {
                 Image(.flameFill)
                     .foregroundColor(spicyColors[currentLevel])

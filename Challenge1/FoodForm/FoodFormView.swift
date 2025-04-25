@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct FoodFormView: View {
+    @Query var users: [UserData]
+    
     @State var img: String = "food_0"
     @Binding var capturedImage: UIImage?
     @State var isShowingImagePicker = false
@@ -177,8 +179,15 @@ struct FoodFormView: View {
                 newFood.img = fileName
             }
         }
-
         context.insert(newFood)
+        
+        let user = users.first
+        let currentLevel = user?.level ?? 2
+        if (spiciness >= currentLevel) {
+            user?.incrementSpicyCount()
+            try? context.save()
+        }
+        
         dismiss()
     }
 }

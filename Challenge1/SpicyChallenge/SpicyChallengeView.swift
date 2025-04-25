@@ -10,11 +10,13 @@ import SwiftData
 
 
 struct SpicyChallengeView: View {
+    @Environment(\.modelContext) private var context
     @Query var foods: [FoodData]
-    
-    @State private var progress: Double = 0.0
-    @State private var spicyLevel: Int = 2
-    @State private var spicyCount: Int = 0
+    @Query private var users: [UserData]
+        
+//    @State private var progress: Double = 0.0
+//    @State private var spicyLevel: Int = 2
+//    @State private var spicyCount: Int = 0
     private let goal: Int = 10
     
     @State private var showLevelUp = false
@@ -24,6 +26,10 @@ struct SpicyChallengeView: View {
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
+            let user = users.first
+            let spicyLevel = user?.level ?? 2
+            let spicyCount = user?.spicyCount ?? 0
+            let progress: Double = Double(spicyCount) / Double(10)
             VStack(alignment: .leading, spacing: 50) {
                 VStack(spacing: 20) {
                     Image(.flameFill)
@@ -56,6 +62,9 @@ struct SpicyChallengeView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
+                .onAppear {
+                    print("spicy count: \(spicyCount) progress: \(progress)")
+                }
                 
                 let foodCount = foods.count
                 if (foodCount < 10) {
@@ -97,7 +106,6 @@ struct SpicyChallengeView: View {
             .navigationDestination(for: LevelUpNavigation.self) { nav in
                 LevelUpView(
                     isLevelUp: nav.isLevelUp,
-                    currentLevel: nav.currentLevel,
                     onOk: {
                         navigationPath.removeLast(navigationPath.count)
                     })
@@ -108,7 +116,6 @@ struct SpicyChallengeView: View {
 
 struct LevelUpNavigation: Hashable {
     let isLevelUp: Bool
-    let currentLevel: Int
 }
 
 // Filtering food data

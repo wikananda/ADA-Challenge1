@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SpicerView: View {
     @State private var selectedImage: UIImage? = nil
     @State private var showImagePicker = false
     @State private var activeTab: Int = 0
     @State private var showFoodForm = false
+    
+    @Environment(\.modelContext) private var context
+    @Query var users: [UserData]
     
     func OpenCamera() {
         showImagePicker = true
@@ -58,9 +62,21 @@ struct SpicerView: View {
         }) {
             NavigationView {
                 FoodFormView(capturedImage: $selectedImage)
+                    .environment(\.modelContext, context)
             }
             .accentColor(.orangeish)
             .environment(\.colorScheme, .light)
+        }
+        .onAppear {
+            if users.isEmpty {
+                let user = UserData()
+                context.insert(user)
+            }
+            print("users count: \(users.count)")
+//            let user = users.first
+//            user?.resetLevelTo(level: 4)
+//            try? context.save()
+            
         }
     }
 }

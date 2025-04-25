@@ -130,8 +130,7 @@ struct ChallengeDetailsView: View {
 //                            showLevelUp = true
                         navigationPath.append(
                             LevelUpNavigation(
-                                isLevelUp: isLevelUp,
-                                currentLevel: 2
+                                isLevelUp: isLevelUp
                             )
                         )
                     }) {
